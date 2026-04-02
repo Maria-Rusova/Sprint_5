@@ -20,11 +20,9 @@ def driver() -> Generator[WebDriver, None, None]:
 def registered_user() -> StaticUser:
     user = StaticUser.get_static()
     temp_driver = webdriver.Chrome()
-    try:
-        StaticUser.register(temp_driver, user)
-        return user
-    finally:
-        temp_driver.quit()
+    StaticUser.register(temp_driver, user)
+    temp_driver.quit()
+    return user
 
 
 @pytest.fixture

@@ -27,4 +27,9 @@ class TestRegistrationPage:
         driver.find_element(*RegPage.EMAIL_INPUT).send_keys(user.login)
         driver.find_element(*RegPage.PASSWORD_INPUT).send_keys(password)
         driver.find_element(*RegPage.REGISTRATE_BUTTON).click()
-        assert WebDriverWait(driver, 5).until(EC.visibility_of_element_located(RegPage.INPUT_ERROR_TEXT)).is_displayed()
+
+        error_element = WebDriverWait(driver, 5).until(EC.visibility_of_element_located(RegPage.INPUT_ERROR_TEXT))
+        error_text = error_element.text.strip()
+
+        expected_substring = "Некорректный пароль"
+        assert expected_substring in error_text
